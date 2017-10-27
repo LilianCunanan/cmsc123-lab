@@ -1,0 +1,121 @@
+public class LinkedList<E> implements CollectionInterface<E>{
+  public class Node {
+    E data;
+    Node next;
+  
+    Node(E data, Node next) {
+      this.data = data;
+      this.next = next;
+    }
+  }
+  Node head = null;
+  int size = 0;
+  
+  LinkedList() {}
+  
+  /*TEMPLATE //this code was from our grocery linked list mp
+   * Fields:
+   * ...this.head...          --GroceryNode
+   * ...this.size...          --int
+   * 
+   * Methods:
+   * ...this.addFirst()...          --boolean
+   * ...this.remove()...            --boolean
+   * ...this.markAsBought()...      --boolean
+   * ...this.display()...           --
+  */
+
+  //-> boolean
+  // returns true if this item is successfully added to the list only if there are no other items in the list
+  public boolean addFirst(E item) { //this add only recieve/requires an item
+    Node newNode = new Node(item, head);
+      head = newNode;
+      this.size++;
+      return true;
+  }
+  
+  //-> void
+  //displays this Linked List
+  public void display() {
+    Node currentNode = head;
+    while(currentNode != null) {
+      System.out.println(currentNode.data);
+      currentNode = currentNode.next;
+    }
+  }
+  
+  //E, int -> bool
+  //add item (type E) at given int index
+  public boolean add(E item, int index){//this add accepts an item AND int
+    if(index == 0 || this.size == 0){
+      addFirst(item);
+    }
+    Node newNode = new Node(item,head);
+    Node currentNode = this.head;
+    Node prevNode = currentNode;
+    
+    int ctr = 0;
+    for(;currentNode != null;ctr++){
+      if(ctr == index){
+        newNode.next = currentNode;
+        prevNode.next = newNode;
+        return true;
+      }
+      prevNode = currentNode;
+      currentNode = currentNode.next;
+    }
+    return false; 
+  }
+  public boolean remove(int index){
+    //remove the item at int index and returns
+    if (index > size){
+      return false;
+    }
+    if(this.size == 0){
+      return false;
+    }
+    Node currentNode = this.head;
+    Node prevNode = currentNode;
+    
+    int counter = 0;
+    for(;currentNode != null;counter++){
+      if(counter == index){
+        prevNode.next = currentNode.next;
+        currentNode.next = null;//gi null to remove
+        
+        this.size--;
+        return true;
+      }
+      prevNode = currentNode;
+      currentNode = currentNode.next;
+    }
+    return false; 
+  }
+  
+  public int size(){
+    //return size of list
+    return this.size;
+  }
+  public Iterator<E> iterator(){
+    return new LinkListIterator();
+  }
+  
+  public class LinkedListIterator implements IteratorInterface{
+    Node current = head;
+    
+    public boolean hasNext(){
+      if(current != null){
+        return true;
+      }
+      return false;
+    }
+    public E next(){
+      if(hasNext() == false){
+      //  throws Exception;
+      }
+      E item = current.data;
+      current = current.next;
+      return item;
+    }
+  }
+}
