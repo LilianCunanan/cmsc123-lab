@@ -1,0 +1,52 @@
+import junit.framework.TestCase;
+
+public class LinkedListTester extends TestCase {
+  
+  public void testAdd() {
+    LinkedList<String> one = new LinkedList<String>();
+    assertEquals(true, one.add("Julie", 0)); //pass to addfirst
+    assertEquals(true, one.add("Lily", 1));
+    assertEquals(true, one.add("Tim", 2));
+    assertEquals(true, one.add("Loewe", 1)); //overwrite
+  }
+  
+  public void testAddFirst() {
+    LinkedList<String> two = new LinkedList<String>();
+    assertEquals(true, two.add("Pizza"));
+  }
+
+  public void testRemove() {
+    LinkedList<String> three = new LinkedList<String>();
+
+    three.add("Julie", 0);
+    three.add("Lily", 1);
+    three.add("Tim", 2);
+    assertEquals(true, three.remove(0));
+    assertEquals(true, three.remove(1));
+    assertEquals(true, three.remove(2));
+    assertEquals(false, three.remove(4)); //more than the size
+  }
+
+  public void testHasNext() {
+    LinkedList<String> four = new LinkedList<String>();
+
+    four.add("Julie", 0);
+    four.add("Lily", 1);
+    four.add("Tim", 2);
+
+    @SuppressWarnings("rawtypes")
+    Iterator x = four.iterator();
+
+    assertEquals(true, x.hasNext());
+  }
+
+ public void testNext() {
+  LinkedList<String> five = new LinkedList<String>();
+
+  @SuppressWarnings("rawtypes")
+  Iterator y = five.iterator();
+
+  while (y.hasNext())
+   System.out.println(y.next() + " ");
+ }
+}
