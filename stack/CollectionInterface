@@ -1,0 +1,3 @@
+public interface CollectionInterface<E>{
+  public Iterator<E> iterator();
+}
