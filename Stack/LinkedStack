@@ -31,11 +31,6 @@ class LinkedStack <Item> implements Stack <Item>{
   }
   
   public Item peek(){
-    Node oldHead = head;
-    head = new Node();
-    head.item = item;
-    head.next = oldHead;
-    size++;
   }
   
   public boolean isEmpty(){
