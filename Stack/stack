@@ -1,0 +1,7 @@
+public interface Stack <Item> extends Iterable <Item> {
+  void push(Item item); // adds item to start of stack
+  Item pop(); // return the item on top of stack
+  Item peek(); //return top of stack, not delete
+  boolean isEmpty(); // returns true if stack is empty, false otherwise
+  int size();  // returns number of items
+}
