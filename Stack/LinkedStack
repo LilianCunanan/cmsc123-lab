@@ -1,36 +1,38 @@
+/* LinkedStack.java */
 import java.lang.Iterable;
 import java.util.*;
  
-class LinkedStack <Item> implements Stack <Item>{
-  private Node head; 
-  private int size; 
- 
-  private class Node{
-    Item item;
+public class LinkedStack <E> implements Stack <E>{
+  public class Node{
+    E item;
     Node next;
-  }
   
-  public LinkedStack(){  //constructor
-    head = null;
-    size = 0;
+    Node(E item, Node next){
+      this.item = item;
+      this.next = next;
+    }
   }
+  Node head = null;
+  int size = 0; 
   
-  public void push(Item item){
-    Node oldHead = head;
-    head = new Node();
+  public void push(E item){ //Add item to the beginning of the list.
+    Node prevHead = head;
+    head = new Node(item,head);
     head.item = item;
-    head.next = oldHead;
+    head.next = prevHead;
     size++;
   }
  
-  public Item pop(){
-    Item item = head.item;
+  public E pop(){   //Remove item from the beginning of the list.
+    E item = head.item;
     head = head.next;
     size--;
     return item;
   }
   
-  public Item peek(){
+  public E peek(){ //Show the first item in the list/the item in the front
+    E item = head.item;
+    return item;
   }
   
   public boolean isEmpty(){
@@ -41,29 +43,28 @@ class LinkedStack <Item> implements Stack <Item>{
       return false;
   }
  
-  public int size(){
+  public int size(){ //Return number of items
     return size;
   }
  
-  public Iterator<Item> iterator(){
+  public Iterator<E> iterator(){   //Iterator for traversing stack items
     return new LinkedStackIterator();
   }
  
-  private class LinkedStackIterator implements Iterator <Item>{
-    private int i = size;
-    private Node first = head; //the first node
+  public class LinkedStackIterator implements IteratorStackInterface <E>{ //inner class to implement iterator interface
+    public int i = size;
+    public Node current = head; //the first node
  
     public boolean hasNext(){
-      if (i > 0){
+      if(current != null){
         return true;
       }
-      else
-        false;
+      return false;
     }
  
-    public Item next(){
-      Item item = first.item;
-      first = first.next;
+    public E next(){
+      E item = current.item;
+      current = current.next;
       i--;
       return item;
     }
