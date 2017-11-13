@@ -1,0 +1,4 @@
+public interface IteratorStackInterface<E>{
+  public boolean hasNext();
+  public E next();
+}
