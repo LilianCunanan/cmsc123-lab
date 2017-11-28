@@ -1,0 +1,109 @@
+// Java program to demonstrate implementation of our
+// own hash table with chaining for collision detection
+/*import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+*/
+import java.util.*;
+
+
+// A node of chains
+class HashNode<K, V>{ //K=String, V=int
+  String key;
+  int value;
+ 
+  HashNode<K, V> next; //next node
+  
+  public HashNode(String key, int value){ // Constructor
+    this.key = key;
+    this.value = value;
+  }
+}
+
+class Map<K, V>{ // Class to represent entire hash table
+  private ArrayList<HashNode<K, V>> array;
+  private int num; //capacity max size of array list
+  private int size; //current size of array list
+ 
+  public Map(){
+    array = new ArrayList<>();
+    num = 10;
+    size = 0;
+    for(int i = 0; i < num; i++){
+      array.add(null);
+    }
+  }
+    
+  public void put(String key, int value){ //puts or adds data on the table
+    int index = getIndex(key);
+    HashNode<K, V> head = array.get(index);
+ 
+    while(head != null){ // Check if key is already present
+      if(head.key.equals(key)){
+        head.value = value;
+        return;
+      }
+      head = head.next;
+    }
+    size++;
+    head = array.get(index);
+    HashNode<K, V> newNode = new HashNode<K, V>(key, value);
+    newNode.next = head;
+    array.set(index, newNode);
+  }
+    
+  public int get(String key){ //Returns value form a given key
+    int index = getIndex(key);
+    HashNode<K, V> head = array.get(index);
+      
+    while(head != null){
+      if(head.key.equals(key))
+        return head.value;
+        head = head.next;
+    }
+    return 0; //null dapat but I used 0 because I used this function for my contains procedure
+  }
+    
+  public void remove(String key){
+    int index = getIndex(key);
+    HashNode<K, V> head = array.get(index);
+    HashNode<K, V> prev = null;
+      
+    while(head != null){
+      if(head.key.equals(key)){
+        break;
+      }
+      prev = head;
+      head = head.next;
+    }     
+    size-- ; 
+    if(prev != null){
+       prev.next = head.next;
+    }
+    else
+       array.set(index, head.next);
+  }
+    
+  public boolean containsKey(String key){//returns true if key exists false otherwise
+    if(get(key) == 0) {
+      return false;
+    } 
+    else
+      return true;
+  }
+/*    
+  public ArrayList<String> keys(){
+    //ArrayList<String> l = new ArrayList<String>(Map.keySet());
+    //return l;
+      
+    //Set<String> allKeys = Map.keySet();
+  }
+*/
+
+  //hash function to find index for a given key
+  private int getIndex(String key){
+    int hashCode = key.hashCode();
+    int index = hashCode % num;
+    return index;
+  }
+}
